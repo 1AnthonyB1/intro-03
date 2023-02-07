@@ -1,5 +1,4 @@
 ---
-
 #################################
 
 #################################
@@ -12,6 +11,8 @@
 
 name: Lint Code Base
 
+
+
 #
 
 # Documentation:
@@ -19,6 +20,8 @@ name: Lint Code Base
 # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 
 #
+
+
 
 #############################
 
@@ -28,11 +31,13 @@ name: Lint Code Base
 
 on:
 
-push:
+  push:
 
-pull_request:
+  pull_request:
 
-branches: [master, main]
+    branches: [master, main]
+
+
 
 ###############
 
@@ -42,55 +47,58 @@ branches: [master, main]
 
 jobs:
 
+  build:
 
-build:
+    # Name the Job
 
-# Name the Job
+    name: Lint Code Base
 
-name: Lint Code Base
+    # Set the agent to run on
 
-# Set the agent to run on
+    runs-on: ubuntu-latest
 
-runs-on: ubuntu-latest
 
-##################
 
-# Load all steps #
+    ##################
 
-##################
+    # Load all steps #
 
-steps:
+    ##################
 
-##########################
+    steps:
 
-# Checkout the code base #
+      ##########################
 
-##########################
+      # Checkout the code base #
 
-- name: Checkout Code
+      ##########################
 
-uses: actions/checkout@v3
+      - name: Checkout Code
 
-with:
+        uses: actions/checkout@v3
 
-# Full git history is needed to get a proper list of changed files within `super-linter`
+        with:
 
-fetch-depth: 0
+          # Full git history is needed to get a proper list of changed files within `super-linter`
 
-################################
+          fetch-depth: 0
 
-# Run Linter against code base #
 
-################################
 
-- name: Lint Code Base
+      ################################
 
-uses: github/super-linter@v4
+      # Run Linter against code base #
 
-env:
+      ################################
 
-VALIDATE_ALL_CODEBASE: false
+      - name: Lint Code Base
 
-DEFAULT_BRANCH: master
+        uses: github/super-linter@v4
 
-GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+
+          VALIDATE_ALL_CODEBASE: false
+
+          DEFAULT_BRANCH: master
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
